@@ -59,6 +59,7 @@ fun RecipeListScreen(
     state: RecipeListUiState,
     query: TextFieldState,
     onCategorySelect: (Category?) -> Unit,
+    onRecipeClick: (Long) -> Unit,
 ) {
     Scaffold(
         topBar = { TopAppBar(title = { Text(stringResource(R.string.app_name)) }) },
@@ -86,7 +87,7 @@ fun RecipeListScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     items(state.recipes, key = { it.id }) { recipe ->
-                        RecipeCard(recipe)
+                        RecipeCard(recipe, onClick = { onRecipeClick(recipe.id) })
                     }
                 }
             }
@@ -159,8 +160,8 @@ private fun CategoryChip(text: String, selected: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-private fun RecipeCard(recipe: Recipe) {
-    Card(modifier = Modifier.fillMaxWidth()) {
+private fun RecipeCard(recipe: Recipe, onClick: () -> Unit) {
+    Card(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             PhotoPlaceholder(
                 iconSize = 32.dp,
@@ -219,6 +220,7 @@ private fun RecipeListScreenPreview() {
             state = RecipeListUiState(recipes = recipes, isLoading = false),
             query = rememberTextFieldState(),
             onCategorySelect = {},
+            onRecipeClick = {},
         )
     }
 }

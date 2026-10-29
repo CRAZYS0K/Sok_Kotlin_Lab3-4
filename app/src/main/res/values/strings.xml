@@ -14,6 +14,15 @@
         <item quantity="other">%d порции</item>
     </plurals>
 
+    <string name="back">Назад</string>
+    <string name="servings_label">Порции</string>
+    <string name="decrease_servings">Меньше порций</string>
+    <string name="increase_servings">Больше порций</string>
+    <string name="ingredients">Ингредиенты</string>
+    <string name="cooking">Приготовление</string>
+    <string name="no_ingredients">Ингредиенты не указаны</string>
+    <string name="no_steps">Шаги приготовления не указаны</string>
+
     <string name="category_breakfast">Завтраки</string>
     <string name="category_soup">Супы</string>
     <string name="category_main">Горячее</string>

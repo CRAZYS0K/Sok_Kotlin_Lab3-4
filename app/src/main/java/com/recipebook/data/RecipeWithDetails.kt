@@ -9,4 +9,9 @@ data class RecipeWithDetails(
     val ingredients: List<Ingredient>,
     @Relation(parentColumns = ["id"], entityColumns = ["recipeId"])
     val steps: List<Step>,
-)
+) {
+    fun inOrder(): RecipeWithDetails = copy(
+        ingredients = ingredients.sortedBy { it.position },
+        steps = steps.sortedBy { it.position },
+    )
+}

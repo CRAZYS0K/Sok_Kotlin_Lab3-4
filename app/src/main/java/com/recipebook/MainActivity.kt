@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
                     state = state,
                     query = viewModel.query,
                     onCategorySelect = viewModel::onCategorySelect,
+                    onRecipeClick = { id -> startActivity(RecipeActivity.newIntent(this, id)) },
                 )
             }
         }
