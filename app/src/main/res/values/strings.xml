@@ -1,3 +1,24 @@
-<resources>
-    <string name="app_name">Sok_Kotlin_Lab3-4</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ru">
+    <string name="app_name">Книга рецептов</string>
+
+    <string name="search_hint">Поиск рецептов</string>
+    <string name="clear_search">Очистить поиск</string>
+    <string name="filter_all">Все</string>
+    <string name="empty_book">В книге пока нет рецептов</string>
+    <string name="nothing_found">Ничего не найдено</string>
+    <string name="minutes_short">%1$d мин</string>
+    <plurals name="servings_count">
+        <item quantity="one">%d порция</item>
+        <item quantity="few">%d порции</item>
+        <item quantity="many">%d порций</item>
+        <item quantity="other">%d порции</item>
+    </plurals>
+
+    <string name="category_breakfast">Завтраки</string>
+    <string name="category_soup">Супы</string>
+    <string name="category_main">Горячее</string>
+    <string name="category_baking">Выпечка</string>
+    <string name="category_salad">Салаты</string>
+    <string name="category_dessert">Десерты</string>
+    <string name="category_other">Другое</string>
 </resources>

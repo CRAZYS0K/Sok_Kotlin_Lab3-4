@@ -3,7 +3,7 @@ package com.recipebook.data
 import kotlinx.coroutines.flow.Flow
 
 class RecipeRepository(private val dao: RecipeDao) {
-    fun observeAll(): Flow<List<RecipeWithDetails>> = dao.observeAll()
+    fun observeRecipes(): Flow<List<Recipe>> = dao.observeRecipes()
 
     fun observe(id: Long): Flow<RecipeWithDetails?> = dao.observe(id)
 
