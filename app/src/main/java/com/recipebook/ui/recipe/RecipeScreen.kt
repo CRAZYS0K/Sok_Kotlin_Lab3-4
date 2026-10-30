@@ -57,6 +57,7 @@ import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
 fun RecipeScreen(
     state: RecipeUiState,
     onServingsChange: (Int) -> Unit,
+    onEdit: (Long) -> Unit,
     onBack: () -> Unit,
 ) {
     Scaffold(
@@ -69,6 +70,17 @@ fun RecipeScreen(
                             painter = painterResource(R.drawable.ic_arrow_back),
                             contentDescription = stringResource(R.string.back),
                         )
+                    }
+                },
+                actions = {
+                    val recipe = state.details?.recipe
+                    if (recipe != null) {
+                        IconButton(onClick = { onEdit(recipe.id) }) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_edit),
+                                contentDescription = stringResource(R.string.edit),
+                            )
+                        }
                     }
                 },
             )
@@ -261,6 +273,7 @@ private fun RecipeScreenPreview() {
         RecipeScreen(
             state = RecipeUiState(details = details, servings = 3, isLoading = false),
             onServingsChange = {},
+            onEdit = {},
             onBack = {},
         )
     }

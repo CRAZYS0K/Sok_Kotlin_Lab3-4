@@ -8,6 +8,8 @@ class RecipeRepository(private val dao: RecipeDao) {
 
     fun observe(id: Long): Flow<RecipeWithDetails?> = dao.observe(id).map { it?.inOrder() }
 
+    suspend fun find(id: Long): RecipeWithDetails? = dao.findById(id)?.inOrder()
+
     suspend fun save(recipe: Recipe, ingredients: List<Ingredient>, steps: List<Step>): Long =
         dao.save(recipe, ingredients, steps)
 

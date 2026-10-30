@@ -25,14 +25,18 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -58,11 +62,22 @@ import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
 fun RecipeListScreen(
     state: RecipeListUiState,
     query: TextFieldState,
+    snackbarHostState: SnackbarHostState,
     onCategorySelect: (Category?) -> Unit,
     onRecipeClick: (Long) -> Unit,
+    onAddClick: () -> Unit,
 ) {
     Scaffold(
         topBar = { TopAppBar(title = { Text(stringResource(R.string.app_name)) }) },
+        floatingActionButton = {
+            FloatingActionButton(onClick = onAddClick) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_add),
+                    contentDescription = stringResource(R.string.add_recipe),
+                )
+            }
+        },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -83,7 +98,7 @@ fun RecipeListScreen(
                 state.recipes.isEmpty() -> EmptyMessage(stringResource(R.string.nothing_found))
                 else -> LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
+                    contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     items(state.recipes, key = { it.id }) { recipe ->
@@ -219,8 +234,10 @@ private fun RecipeListScreenPreview() {
         RecipeListScreen(
             state = RecipeListUiState(recipes = recipes, isLoading = false),
             query = rememberTextFieldState(),
+            snackbarHostState = remember { SnackbarHostState() },
             onCategorySelect = {},
             onRecipeClick = {},
+            onAddClick = {},
         )
     }
 }

@@ -16,6 +16,10 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes WHERE id=:id")
     fun observe(id: Long): Flow<RecipeWithDetails?>
 
+    @Transaction
+    @Query("SELECT * FROM recipes WHERE id = :id")
+    suspend fun findById(id: Long): RecipeWithDetails?
+
     @Upsert
     suspend fun upsertRecipe(recipe: Recipe): Long
 

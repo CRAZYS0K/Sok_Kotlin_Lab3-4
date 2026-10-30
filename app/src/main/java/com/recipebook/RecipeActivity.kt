@@ -24,6 +24,7 @@ class RecipeActivity : AppCompatActivity() {
                 RecipeScreen(
                     state = state,
                     onServingsChange = viewModel::changeServings,
+                    onEdit = { id -> startActivity(EditRecipeActivity.newIntent(this, id)) },
                     onBack = ::finish,
                 )
             }
