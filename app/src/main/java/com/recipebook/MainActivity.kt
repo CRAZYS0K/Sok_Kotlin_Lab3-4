@@ -29,6 +29,15 @@ class MainActivity : AppCompatActivity() {
                 val snackbarHostState = remember { SnackbarHostState() }
                 val scope = rememberCoroutineScope()
                 val savedMessage = stringResource(R.string.recipe_saved)
+                val deletedMessage = stringResource(R.string.recipe_deleted)
+
+                val recipeLauncher = rememberLauncherForActivityResult(
+                    ActivityResultContracts.StartActivityForResult()
+                ) { result ->
+                    if (result.resultCode == RecipeActivity.RESULT_DELETED) {
+                        scope.launch { snackbarHostState.showSnackbar(deletedMessage) }
+                    }
+                }
 
                 val addLauncher = rememberLauncherForActivityResult(
                     ActivityResultContracts.StartActivityForResult()
@@ -43,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                     query = viewModel.query,
                     snackbarHostState = snackbarHostState,
                     onCategorySelect = viewModel::onCategorySelect,
-                    onRecipeClick = { id -> startActivity(RecipeActivity.newIntent(this, id)) },
+                    onRecipeClick = { id -> recipeLauncher.launch(RecipeActivity.newIntent(this, id)) },
                     onAddClick = { addLauncher.launch(EditRecipeActivity.newIntent(this, recipeId = null)) },
                 )
             }

@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.HorizontalDivider
@@ -28,8 +29,13 @@ import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -58,8 +64,11 @@ fun RecipeScreen(
     state: RecipeUiState,
     onServingsChange: (Int) -> Unit,
     onEdit: (Long) -> Unit,
+    onDelete: () -> Unit,
     onBack: () -> Unit,
 ) {
+    var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -79,6 +88,12 @@ fun RecipeScreen(
                             Icon(
                                 painter = painterResource(R.drawable.ic_edit),
                                 contentDescription = stringResource(R.string.edit),
+                            )
+                        }
+                        IconButton(onClick = { showDeleteDialog = true }) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_delete),
+                                contentDescription = stringResource(R.string.delete),
                             )
                         }
                     }
@@ -106,6 +121,24 @@ fun RecipeScreen(
                 stepsSection(details.steps)
             }
         }
+    }
+
+    val recipe = state.details?.recipe
+    if (showDeleteDialog && recipe != null) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = { Text(stringResource(R.string.delete_question)) },
+            text = { Text(stringResource(R.string.delete_message, recipe.name)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    showDeleteDialog = false
+                    onDelete()
+                }) { Text(stringResource(R.string.delete)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteDialog = false }) { Text(stringResource(R.string.cancel)) }
+            },
+        )
     }
 }
 
@@ -274,6 +307,7 @@ private fun RecipeScreenPreview() {
             state = RecipeUiState(details = details, servings = 3, isLoading = false),
             onServingsChange = {},
             onEdit = {},
+            onDelete = {},
             onBack = {},
         )
     }
