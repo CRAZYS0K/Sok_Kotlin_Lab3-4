@@ -37,6 +37,7 @@ class RecipeForm {
     val minutes = TextFieldState()
     val servings = TextFieldState()
     var category by mutableStateOf(Category.MAIN)
+    var photo by mutableStateOf<String?>(null)
     val ingredients = mutableStateListOf<IngredientFields>()
     val steps = mutableStateListOf<StepFields>()
 
@@ -92,6 +93,7 @@ class RecipeForm {
             cookingMinutes = minutes,
             servings = servings,
             isFavorite = isFavorite,
+            photoFileName = photo,
         )
         val ingredientRows = filledIngredients.map { row ->
             Ingredient(

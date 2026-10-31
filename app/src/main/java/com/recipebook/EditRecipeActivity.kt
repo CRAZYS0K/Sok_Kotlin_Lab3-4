@@ -30,6 +30,10 @@ class EditRecipeActivity : AppCompatActivity() {
                 EditRecipeScreen(
                     form = viewModel.form,
                     isNew = viewModel.isNew,
+                    isPhotoLoading = viewModel.isPhotoLoading,
+                    photoFailed = viewModel.photoFailed,
+                    onPhotoPicked = viewModel::onPhotoPicked,
+                    onPhotoRemove = viewModel::removePhoto,
                     onSave = viewModel::save,
                     onClose = ::finish,
                 )

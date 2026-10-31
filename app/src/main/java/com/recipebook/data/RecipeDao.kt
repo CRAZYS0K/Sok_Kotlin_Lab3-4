@@ -54,6 +54,9 @@ interface RecipeDao {
         return recipeId
     }
 
+    @Query("SELECT photoFileName FROM recipes WHERE id = :id")
+    suspend fun findPhotoFileName(id: Long): String?
+
     @Query("DELETE FROM recipes WHERE id =:id")
     suspend fun deleteById(id: Long)
 

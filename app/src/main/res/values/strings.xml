@@ -36,6 +36,9 @@
     <string name="new_recipe">Новый рецепт</string>
     <string name="edit_recipe">Изменить рецепт</string>
     <string name="close">Закрыть</string>
+    <string name="add_photo">Добавить фото</string>
+    <string name="remove_photo">Удалить фото</string>
+    <string name="photo_error">Не удалось открыть фото</string>
     <string name="name">Название</string>
     <string name="category">Категория</string>
     <string name="time_minutes">Время, мин</string>

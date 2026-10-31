@@ -55,7 +55,7 @@ import com.recipebook.data.Recipe
 import com.recipebook.logic.RecipeFilter
 import com.recipebook.ui.FavoriteButton
 import com.recipebook.ui.IconText
-import com.recipebook.ui.PhotoPlaceholder
+import com.recipebook.ui.RecipePhoto
 import com.recipebook.ui.labelRes
 import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
 
@@ -191,8 +191,10 @@ private fun Chip(text: String, selected: Boolean, onClick: () -> Unit) {
 private fun RecipeCard(recipe: Recipe, onClick: () -> Unit, onFavoriteToggle: () -> Unit) {
     Card(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-            PhotoPlaceholder(
+            RecipePhoto(
+                fileName = recipe.photoFileName,
                 iconSize = 32.dp,
+                maxSide = 300,
                 modifier = Modifier
                     .size(80.dp)
                     .clip(RoundedCornerShape(12.dp)),

@@ -54,7 +54,7 @@ import com.recipebook.data.Step
 import com.recipebook.logic.Servings
 import com.recipebook.ui.FavoriteButton
 import com.recipebook.ui.IconText
-import com.recipebook.ui.PhotoPlaceholder
+import com.recipebook.ui.RecipePhoto
 import com.recipebook.ui.currentLocale
 import com.recipebook.ui.labelRes
 import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
@@ -147,8 +147,10 @@ fun RecipeScreen(
 
 private fun LazyListScope.recipeHeader(recipe: Recipe) {
     item {
-        PhotoPlaceholder(
+        RecipePhoto(
+            fileName = recipe.photoFileName,
             iconSize = 64.dp,
+            maxSide = 1080,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
