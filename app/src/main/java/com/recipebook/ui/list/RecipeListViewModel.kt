@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.recipebook.data.Category
 import com.recipebook.data.Recipe
 import com.recipebook.data.RecipeRepository
+import com.recipebook.logic.RecipeFilter
 import com.recipebook.logic.RecipeSearch
 import com.recipebook.recipeBookApplication
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,33 +16,38 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 data class RecipeListUiState(
     val recipes: List<Recipe> = emptyList(),
-    val category: Category? = null,
+    val filter: RecipeFilter = RecipeFilter.All,
     val isBookEmpty: Boolean = false,
     val isLoading: Boolean = true,
 )
 
-class RecipeListViewModel(repository: RecipeRepository) : ViewModel() {
+class RecipeListViewModel(private val repository: RecipeRepository) : ViewModel() {
     val query = TextFieldState()
-    private val category = MutableStateFlow<Category?>(null)
+    private val filter = MutableStateFlow<RecipeFilter>(RecipeFilter.All)
 
     val uiState: StateFlow<RecipeListUiState> = combine(
         repository.observeRecipes(),
         snapshotFlow { query.text.toString() },
-        category,
+        filter,
     ) { recipes, text, selected ->
         RecipeListUiState(
             recipes = RecipeSearch.filter(recipes, text, selected),
-            category = selected,
+            filter = selected,
             isBookEmpty = recipes.isEmpty(),
             isLoading = false,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), RecipeListUiState())
 
-    fun onCategorySelect(value: Category?) {
-        category.value = value
+    fun onFilterSelect(value: RecipeFilter) {
+        filter.value = value
+    }
+
+    fun onFavoriteToggle(recipe: Recipe) {
+        viewModelScope.launch { repository.setFavorite(recipe.id, !recipe.isFavorite) }
     }
 
     companion object {

@@ -53,6 +53,11 @@ class RecipeViewModel(
         savedStateHandle[KEY_SERVINGS] = (current + delta).coerceIn(Servings.MIN, Servings.MAX)
     }
 
+    fun toggleFavorite() {
+        val recipe = uiState.value.details?.recipe ?: return
+        viewModelScope.launch { repository.setFavorite(recipe.id, !recipe.isFavorite) }
+    }
+
     fun delete() {
         viewModelScope.launch {
             repository.delete(recipeId)

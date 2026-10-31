@@ -51,8 +51,9 @@ class MainActivity : AppCompatActivity() {
                     state = state,
                     query = viewModel.query,
                     snackbarHostState = snackbarHostState,
-                    onCategorySelect = viewModel::onCategorySelect,
+                    onFilterSelect = viewModel::onFilterSelect,
                     onRecipeClick = { id -> recipeLauncher.launch(RecipeActivity.newIntent(this, id)) },
+                    onFavoriteToggle = viewModel::onFavoriteToggle,
                     onAddClick = { addLauncher.launch(EditRecipeActivity.newIntent(this, recipeId = null)) },
                 )
             }

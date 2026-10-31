@@ -52,6 +52,8 @@ import androidx.compose.ui.unit.dp
 import com.recipebook.R
 import com.recipebook.data.Category
 import com.recipebook.data.Recipe
+import com.recipebook.logic.RecipeFilter
+import com.recipebook.ui.FavoriteButton
 import com.recipebook.ui.IconText
 import com.recipebook.ui.PhotoPlaceholder
 import com.recipebook.ui.labelRes
@@ -63,8 +65,9 @@ fun RecipeListScreen(
     state: RecipeListUiState,
     query: TextFieldState,
     snackbarHostState: SnackbarHostState,
-    onCategorySelect: (Category?) -> Unit,
+    onFilterSelect: (RecipeFilter) -> Unit,
     onRecipeClick: (Long) -> Unit,
+    onFavoriteToggle: (Recipe) -> Unit,
     onAddClick: () -> Unit,
 ) {
     Scaffold(
@@ -91,7 +94,7 @@ fun RecipeListScreen(
                     .padding(horizontal = 16.dp),
             )
             Spacer(Modifier.height(12.dp))
-            CategoryChips(selected = state.category, onSelect = onCategorySelect)
+            FilterChips(selected = state.filter, onSelect = onFilterSelect)
             when {
                 state.isLoading -> Unit
                 state.isBookEmpty -> EmptyMessage(stringResource(R.string.empty_book))
@@ -102,7 +105,11 @@ fun RecipeListScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     items(state.recipes, key = { it.id }) { recipe ->
-                        RecipeCard(recipe, onClick = { onRecipeClick(recipe.id) })
+                        RecipeCard(
+                            recipe = recipe,
+                            onClick = { onRecipeClick(recipe.id) },
+                            onFavoriteToggle = { onFavoriteToggle(recipe) },
+                        )
                     }
                 }
             }
@@ -138,24 +145,30 @@ private fun SearchField(query: TextFieldState, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun CategoryChips(selected: Category?, onSelect: (Category?) -> Unit) {
+private fun FilterChips(selected: RecipeFilter, onSelect: (RecipeFilter) -> Unit) {
     LazyRow(
         contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         item {
-            CategoryChip(stringResource(R.string.filter_all), selected = selected == null) { onSelect(null) }
+            Chip(stringResource(R.string.filter_all), selected = selected == RecipeFilter.All) {
+                onSelect(RecipeFilter.All)
+            }
+        }
+        item {
+            Chip(stringResource(R.string.filter_favorites), selected = selected == RecipeFilter.Favorites) {
+                onSelect(RecipeFilter.Favorites)
+            }
         }
         items(Category.entries) { category ->
-            CategoryChip(stringResource(category.labelRes()), selected = selected == category) {
-                onSelect(category)
-            }
+            val filter = RecipeFilter.InCategory(category)
+            Chip(stringResource(category.labelRes()), selected = selected == filter) { onSelect(filter) }
         }
     }
 }
 
 @Composable
-private fun CategoryChip(text: String, selected: Boolean, onClick: () -> Unit) {
+private fun Chip(text: String, selected: Boolean, onClick: () -> Unit) {
     FilterChip(
         selected = selected,
         onClick = onClick,
@@ -175,7 +188,7 @@ private fun CategoryChip(text: String, selected: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-private fun RecipeCard(recipe: Recipe, onClick: () -> Unit) {
+private fun RecipeCard(recipe: Recipe, onClick: () -> Unit, onFavoriteToggle: () -> Unit) {
     Card(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             PhotoPlaceholder(
@@ -206,6 +219,11 @@ private fun RecipeCard(recipe: Recipe, onClick: () -> Unit) {
                     )
                 }
             }
+            FavoriteButton(
+                isFavorite = recipe.isFavorite,
+                onToggle = onFavoriteToggle,
+                modifier = Modifier.align(Alignment.Top),
+            )
         }
     }
 }
@@ -227,7 +245,7 @@ private fun EmptyMessage(text: String) {
 @Composable
 private fun RecipeListScreenPreview() {
     val recipes = listOf(
-        Recipe(id = 1, name = "Сырники", category = Category.BREAKFAST, cookingMinutes = 25, servings = 3),
+        Recipe(id = 1, name = "Сырники", category = Category.BREAKFAST, cookingMinutes = 25, servings = 3, isFavorite = true),
         Recipe(id = 2, name = "Борщ", category = Category.SOUP, cookingMinutes = 90, servings = 6),
     )
     Sok_Kotlin_Lab34Theme {
@@ -235,8 +253,9 @@ private fun RecipeListScreenPreview() {
             state = RecipeListUiState(recipes = recipes, isLoading = false),
             query = rememberTextFieldState(),
             snackbarHostState = remember { SnackbarHostState() },
-            onCategorySelect = {},
+            onFilterSelect = {},
             onRecipeClick = {},
+            onFavoriteToggle = {},
             onAddClick = {},
         )
     }

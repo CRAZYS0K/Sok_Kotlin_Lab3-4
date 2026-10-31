@@ -34,6 +34,7 @@ class RecipeActivity : AppCompatActivity() {
                 RecipeScreen(
                     state = state,
                     onServingsChange = viewModel::changeServings,
+                    onFavoriteToggle = viewModel::toggleFavorite,
                     onEdit = { id -> startActivity(EditRecipeActivity.newIntent(this, id)) },
                     onDelete = viewModel::delete,
                     onBack = ::finish,

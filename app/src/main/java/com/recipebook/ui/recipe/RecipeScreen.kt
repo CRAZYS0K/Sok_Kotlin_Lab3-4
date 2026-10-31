@@ -52,6 +52,7 @@ import com.recipebook.data.Recipe
 import com.recipebook.data.RecipeWithDetails
 import com.recipebook.data.Step
 import com.recipebook.logic.Servings
+import com.recipebook.ui.FavoriteButton
 import com.recipebook.ui.IconText
 import com.recipebook.ui.PhotoPlaceholder
 import com.recipebook.ui.currentLocale
@@ -63,6 +64,7 @@ import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
 fun RecipeScreen(
     state: RecipeUiState,
     onServingsChange: (Int) -> Unit,
+    onFavoriteToggle: () -> Unit,
     onEdit: (Long) -> Unit,
     onDelete: () -> Unit,
     onBack: () -> Unit,
@@ -84,6 +86,7 @@ fun RecipeScreen(
                 actions = {
                     val recipe = state.details?.recipe
                     if (recipe != null) {
+                        FavoriteButton(isFavorite = recipe.isFavorite, onToggle = onFavoriteToggle)
                         IconButton(onClick = { onEdit(recipe.id) }) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_edit),
@@ -306,6 +309,7 @@ private fun RecipeScreenPreview() {
         RecipeScreen(
             state = RecipeUiState(details = details, servings = 3, isLoading = false),
             onServingsChange = {},
+            onFavoriteToggle = {},
             onEdit = {},
             onDelete = {},
             onBack = {},

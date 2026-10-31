@@ -4,6 +4,8 @@
     <string name="search_hint">Поиск рецептов</string>
     <string name="clear_search">Очистить поиск</string>
     <string name="filter_all">Все</string>
+    <string name="filter_favorites">Избранное</string>
+    <string name="favorite">Избранное</string>
     <string name="empty_book">В книге пока нет рецептов</string>
     <string name="nothing_found">Ничего не найдено</string>
     <string name="add_recipe">Добавить рецепт</string>
