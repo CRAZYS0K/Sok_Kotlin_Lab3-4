@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -36,7 +38,12 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -70,6 +77,9 @@ fun RecipeListScreen(
     onFavoriteToggle: (Recipe) -> Unit,
     onAddClick: () -> Unit,
 ) {
+    val listState = rememberLazyListState()
+    ScrollToTopWhenFirstChanges(listState, state.recipes.firstOrNull()?.id)
+
     Scaffold(
         topBar = { TopAppBar(title = { Text(stringResource(R.string.app_name)) }) },
         floatingActionButton = {
@@ -100,6 +110,7 @@ fun RecipeListScreen(
                 state.isBookEmpty -> EmptyMessage(stringResource(R.string.empty_book))
                 state.recipes.isEmpty() -> EmptyMessage(stringResource(R.string.nothing_found))
                 else -> LazyColumn(
+                    state = listState,
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 88.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -114,6 +125,15 @@ fun RecipeListScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun ScrollToTopWhenFirstChanges(listState: LazyListState, firstId: Long?) {
+    var shownFirstId by rememberSaveable { mutableStateOf(firstId) }
+    LaunchedEffect(firstId) {
+        if (firstId != null && firstId != shownFirstId) listState.scrollToItem(0)
+        shownFirstId = firstId
     }
 }
 
