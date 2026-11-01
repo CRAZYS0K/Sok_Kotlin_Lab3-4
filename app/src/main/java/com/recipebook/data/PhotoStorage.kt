@@ -10,6 +10,7 @@ import com.recipebook.logic.PhotoSize
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.InputStream
 import java.util.UUID
 
 class PhotoStorage(context: Context) {
@@ -40,19 +41,27 @@ class PhotoStorage(context: Context) {
     }
 
     suspend fun load(fileName: String, maxSide: Int): Bitmap? = withContext(Dispatchers.IO) {
-        val file = File(dir, fileName)
-        if (!file.exists()) return@withContext null
-        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        BitmapFactory.decodeFile(file.path, bounds)
-        val options = BitmapFactory.Options().apply {
-            inSampleSize = PhotoSize.sampleSize(bounds.outWidth, bounds.outHeight, maxSide)
-        }
-        BitmapFactory.decodeFile(file.path, options)
+        runCatching {
+            val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            open(fileName).use { BitmapFactory.decodeStream(it, null, bounds) }
+            val options = BitmapFactory.Options().apply {
+                inSampleSize = PhotoSize.sampleSize(bounds.outWidth, bounds.outHeight, maxSide)
+            }
+            open(fileName).use { BitmapFactory.decodeStream(it, null, options) }
+        }.getOrNull()
     }
 
     fun delete(fileName: String) {
+        if (fileName.startsWith(ASSET_PREFIX)) return
         File(dir, fileName).delete()
     }
+
+    private fun open(fileName: String): InputStream =
+        if (fileName.startsWith(ASSET_PREFIX)) {
+            appContext.assets.open(fileName.removePrefix(ASSET_PREFIX))
+        } else {
+            File(dir, fileName).inputStream()
+        }
 
     private fun scaleAndRotate(source: Bitmap, rotation: Int): Bitmap {
         val scale = minOf(1f, MAX_SIDE.toFloat() / maxOf(source.width, source.height))
@@ -64,7 +73,8 @@ class PhotoStorage(context: Context) {
         return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
     }
 
-    private companion object {
-        const val MAX_SIDE = 1280
+    companion object {
+        const val ASSET_PREFIX = "asset:"
+        private const val MAX_SIDE = 1280
     }
 }
