@@ -47,7 +47,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -80,10 +80,16 @@ fun RecipeListScreen(
     val listState = rememberLazyListState()
     ScrollToTopWhenFirstChanges(listState, state.recipes.firstOrNull()?.id)
 
+    val focusManager = LocalFocusManager.current
+    val leaveTo: (() -> Unit) -> Unit = { action ->
+        focusManager.clearFocus()
+        action()
+    }
+
     Scaffold(
         topBar = { TopAppBar(title = { Text(stringResource(R.string.app_name)) }) },
         floatingActionButton = {
-            FloatingActionButton(onClick = onAddClick) {
+            FloatingActionButton(onClick = { leaveTo(onAddClick) }) {
                 Icon(
                     painter = painterResource(R.drawable.ic_add),
                     contentDescription = stringResource(R.string.add_recipe),
@@ -118,7 +124,7 @@ fun RecipeListScreen(
                     items(state.recipes, key = { it.id }) { recipe ->
                         RecipeCard(
                             recipe = recipe,
-                            onClick = { onRecipeClick(recipe.id) },
+                            onClick = { leaveTo { onRecipeClick(recipe.id) } },
                             onFavoriteToggle = { onFavoriteToggle(recipe) },
                         )
                     }
@@ -139,7 +145,7 @@ private fun ScrollToTopWhenFirstChanges(listState: LazyListState, firstId: Long?
 
 @Composable
 private fun SearchField(query: TextFieldState, modifier: Modifier = Modifier) {
-    val keyboard = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     OutlinedTextField(
         state = query,
         modifier = modifier,
@@ -159,7 +165,7 @@ private fun SearchField(query: TextFieldState, modifier: Modifier = Modifier) {
         },
         lineLimits = TextFieldLineLimits.SingleLine,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        onKeyboardAction = { keyboard?.hide() },
+        onKeyboardAction = { focusManager.clearFocus() },
         shape = CircleShape,
     )
 }
