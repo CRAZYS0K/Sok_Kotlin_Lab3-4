@@ -1,3 +1,72 @@
-<resources>
-    <string name="app_name">Sok_Kotlin_Lab3-4</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="ru">
+    <string name="app_name">Книга рецептов</string>
+
+    <string name="search_hint">Поиск рецептов</string>
+    <string name="clear_search">Очистить поиск</string>
+    <string name="filter_all">Все</string>
+    <string name="filter_favorites">Избранное</string>
+    <string name="favorite">Избранное</string>
+    <string name="empty_book">В книге пока нет рецептов</string>
+    <string name="nothing_found">Ничего не найдено</string>
+    <string name="add_recipe">Добавить рецепт</string>
+    <string name="recipe_saved">Рецепт сохранён</string>
+    <string name="minutes_short">%1$d мин</string>
+    <plurals name="servings_count">
+        <item quantity="one">%d порция</item>
+        <item quantity="few">%d порции</item>
+        <item quantity="many">%d порций</item>
+        <item quantity="other">%d порции</item>
+    </plurals>
+
+    <string name="back">Назад</string>
+    <string name="servings_label">Порции</string>
+    <string name="decrease_servings">Меньше порций</string>
+    <string name="increase_servings">Больше порций</string>
+    <string name="ingredients">Ингредиенты</string>
+    <string name="cooking">Приготовление</string>
+    <string name="no_ingredients">Ингредиенты не указаны</string>
+    <string name="no_steps">Шаги приготовления не указаны</string>
+    <string name="edit">Изменить</string>
+    <string name="delete">Удалить</string>
+    <string name="delete_question">Удалить рецепт?</string>
+    <string name="delete_message">Рецепт «%1$s» будет удалён вместе с ингредиентами и шагами.</string>
+    <string name="cancel">Отмена</string>
+    <string name="recipe_deleted">Рецепт удалён</string>
+
+    <string name="new_recipe">Новый рецепт</string>
+    <string name="edit_recipe">Изменить рецепт</string>
+    <string name="close">Закрыть</string>
+    <string name="add_photo">Добавить фото</string>
+    <string name="remove_photo">Удалить фото</string>
+    <string name="photo_error">Не удалось открыть фото</string>
+    <string name="name">Название</string>
+    <string name="category">Категория</string>
+    <string name="time_minutes">Время, мин</string>
+    <string name="ingredient_name">Продукт</string>
+    <string name="ingredient_amount">Кол-во</string>
+    <string name="ingredient_unit">Ед.</string>
+    <string name="add_ingredient">Добавить ингредиент</string>
+    <string name="remove_ingredient">Удалить ингредиент</string>
+    <string name="cooking_steps">Шаги приготовления</string>
+    <string name="step_number">Шаг %1$d</string>
+    <string name="add_step">Добавить шаг</string>
+    <string name="remove_step">Удалить шаг</string>
+    <string name="save">Сохранить</string>
+    <string name="error_empty">Заполните поле</string>
+    <string name="error_not_number">Введите целое число</string>
+    <string name="error_not_positive">Должно быть больше нуля</string>
+    <string name="error_too_large">Слишком большое число</string>
+    <string name="error_ingredient_name">Укажите название продукта</string>
+    <string name="error_amount_empty">Укажите количество</string>
+    <string name="error_amount_not_number">Количество должно быть числом, например 0,5</string>
+    <string name="error_amount_not_positive">Количество должно быть больше нуля</string>
+    <string name="error_amount_too_large">Слишком большое количество</string>
+
+    <string name="category_breakfast">Завтраки</string>
+    <string name="category_soup">Супы</string>
+    <string name="category_main">Горячее</string>
+    <string name="category_baking">Выпечка</string>
+    <string name="category_salad">Салаты</string>
+    <string name="category_dessert">Десерты</string>
+    <string name="category_other">Другое</string>
 </resources>
