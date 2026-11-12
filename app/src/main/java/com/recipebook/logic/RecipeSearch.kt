@@ -2,6 +2,7 @@ package com.recipebook.logic
 
 import com.recipebook.data.Category
 import com.recipebook.data.Recipe
+import com.recipebook.data.RecipeWithIngredients
 
 sealed interface RecipeFilter {
     data object All : RecipeFilter
@@ -10,11 +11,14 @@ sealed interface RecipeFilter {
 }
 
 object RecipeSearch {
-    fun matches(name: String, query: String): Boolean =
-        name.contains(query.trim(), ignoreCase = true)
+    fun matches(text: String, query: String): Boolean =
+        text.contains(query.trim(), ignoreCase = true)
 
-    fun filter(recipes: List<Recipe>, query: String, filter: RecipeFilter): List<Recipe> =
-        recipes.filter { fits(it, filter) && matches(it.name, query) }
+    fun matches(item: RecipeWithIngredients, query: String): Boolean =
+        matches(item.recipe.name, query) || item.ingredients.any { matches(it.name, query) }
+
+    fun filter(items: List<RecipeWithIngredients>, query: String, filter: RecipeFilter): List<Recipe> =
+        items.filter { fits(it.recipe, filter) && matches(it, query) }.map { it.recipe }
 
     private fun fits(recipe: Recipe, filter: RecipeFilter): Boolean = when (filter) {
         RecipeFilter.All -> true

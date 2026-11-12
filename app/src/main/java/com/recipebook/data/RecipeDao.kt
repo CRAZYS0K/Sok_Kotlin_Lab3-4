@@ -9,8 +9,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RecipeDao {
+    @Transaction
     @Query("SELECT * FROM recipes ORDER BY id DESC")
-    fun observeRecipes(): Flow<List<Recipe>>
+    fun observeRecipes(): Flow<List<RecipeWithIngredients>>
 
     @Transaction
     @Query("SELECT * FROM recipes WHERE id=:id")

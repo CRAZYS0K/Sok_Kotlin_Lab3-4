@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Книга рецептов</string>
 
-    <string name="search_hint">Поиск рецептов</string>
+    <string name="search_hint">Поиск по названию и ингредиентам</string>
     <string name="clear_search">Очистить поиск</string>
     <string name="filter_all">Все</string>
     <string name="filter_favorites">Избранное</string>
