@@ -60,6 +60,15 @@
     <string name="error_amount_not_positive">The amount must be greater than zero</string>
     <string name="error_amount_too_large">The amount is too large</string>
 
+    <string name="settings">Settings</string>
+    <string name="language">Interface language</string>
+    <string name="theme">Theme</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="language_russian" translatable="false">Русский</string>
+    <string name="language_english" translatable="false">English</string>
+    <string name="settings_hint">The language and theme apply to all screens of the app.</string>
+
     <string name="category_breakfast">Breakfast</string>
     <string name="category_soup">Soups</string>
     <string name="category_main">Main dishes</string>

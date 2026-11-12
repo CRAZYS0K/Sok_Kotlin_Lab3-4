@@ -1,5 +1,6 @@
 package com.recipebook
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                     onRecipeClick = { id -> recipeLauncher.launch(RecipeActivity.newIntent(this, id)) },
                     onFavoriteToggle = viewModel::onFavoriteToggle,
                     onAddClick = { addLauncher.launch(EditRecipeActivity.newIntent(this, recipeId = null)) },
+                    onSettingsClick = { startActivity(Intent(this, SettingsActivity::class.java)) },
                 )
             }
         }

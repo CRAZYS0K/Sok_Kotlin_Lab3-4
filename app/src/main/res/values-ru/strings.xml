@@ -62,6 +62,13 @@
     <string name="error_amount_not_positive">Количество должно быть больше нуля</string>
     <string name="error_amount_too_large">Слишком большое количество</string>
 
+    <string name="settings">Настройки</string>
+    <string name="language">Язык интерфейса</string>
+    <string name="theme">Тема оформления</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="settings_hint">Язык и тема применяются ко всем экранам приложения.</string>
+
     <string name="category_breakfast">Завтраки</string>
     <string name="category_soup">Супы</string>
     <string name="category_main">Горячее</string>

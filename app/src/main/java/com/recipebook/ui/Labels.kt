@@ -4,7 +4,9 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
 import com.recipebook.R
+import com.recipebook.data.AppLanguage
 import com.recipebook.data.Category
+import com.recipebook.data.ThemeMode
 import com.recipebook.logic.InputError
 import java.util.Locale
 
@@ -17,6 +19,18 @@ fun Category.labelRes(): Int = when (this) {
     Category.SALAD -> R.string.category_salad
     Category.DESSERT -> R.string.category_dessert
     Category.OTHER -> R.string.category_other
+}
+
+@StringRes
+fun AppLanguage.labelRes(): Int = when (this) {
+    AppLanguage.RUSSIAN -> R.string.language_russian
+    AppLanguage.ENGLISH -> R.string.language_english
+}
+
+@StringRes
+fun ThemeMode.labelRes(): Int = when (this) {
+    ThemeMode.LIGHT -> R.string.theme_light
+    ThemeMode.DARK -> R.string.theme_dark
 }
 
 @StringRes

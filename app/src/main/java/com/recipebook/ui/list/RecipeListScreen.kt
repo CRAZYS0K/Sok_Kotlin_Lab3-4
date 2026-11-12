@@ -76,6 +76,7 @@ fun RecipeListScreen(
     onRecipeClick: (Long) -> Unit,
     onFavoriteToggle: (Recipe) -> Unit,
     onAddClick: () -> Unit,
+    onSettingsClick: () -> Unit,
 ) {
     val listState = rememberLazyListState()
     ScrollToTopWhenFirstChanges(listState, state.recipes.firstOrNull()?.id)
@@ -87,7 +88,19 @@ fun RecipeListScreen(
     }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text(stringResource(R.string.app_name)) }) },
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.app_name)) },
+                actions = {
+                    IconButton(onClick = { leaveTo(onSettingsClick) }) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_settings),
+                            contentDescription = stringResource(R.string.settings),
+                        )
+                    }
+                },
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = { leaveTo(onAddClick) }) {
                 Icon(
@@ -285,6 +298,7 @@ private fun RecipeListScreenPreview() {
             onRecipeClick = {},
             onFavoriteToggle = {},
             onAddClick = {},
+            onSettingsClick = {},
         )
     }
 }
