@@ -12,7 +12,7 @@ import androidx.compose.runtime.setValue
 import com.recipebook.data.AppLanguage
 import com.recipebook.data.ThemeMode
 import com.recipebook.ui.settings.SettingsScreen
-import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
+import com.recipebook.ui.theme.RecipeBookTheme
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +26,7 @@ class SettingsActivity : AppCompatActivity() {
         val initialTheme = settings.themeMode ?: if (isNight) ThemeMode.DARK else ThemeMode.LIGHT
 
         setContent {
-            Sok_Kotlin_Lab34Theme {
+            RecipeBookTheme {
                 var language by remember { mutableStateOf(initialLanguage) }
                 var themeMode by remember { mutableStateOf(initialTheme) }
                 SettingsScreen(

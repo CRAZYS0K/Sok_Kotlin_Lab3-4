@@ -28,7 +28,7 @@ import com.recipebook.R
 import com.recipebook.data.AppLanguage
 import com.recipebook.data.ThemeMode
 import com.recipebook.ui.labelRes
-import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
+import com.recipebook.ui.theme.RecipeBookTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -119,7 +119,7 @@ private fun <T> ChoiceRow(
 @Preview(showBackground = true)
 @Composable
 private fun SettingsScreenPreview() {
-    Sok_Kotlin_Lab34Theme {
+    RecipeBookTheme {
         SettingsScreen(
             language = AppLanguage.RUSSIAN,
             themeMode = ThemeMode.LIGHT,

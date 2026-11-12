@@ -57,7 +57,7 @@ import com.recipebook.ui.IconText
 import com.recipebook.ui.RecipePhoto
 import com.recipebook.ui.currentLocale
 import com.recipebook.ui.labelRes
-import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
+import com.recipebook.ui.theme.RecipeBookTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -307,7 +307,7 @@ private fun RecipeScreenPreview() {
         ),
         steps = listOf(Step(id = 1, recipeId = 1, position = 0, text = "Размять творог вилкой.")),
     )
-    Sok_Kotlin_Lab34Theme {
+    RecipeBookTheme {
         RecipeScreen(
             state = RecipeUiState(details = details, servings = 3, isLoading = false),
             onServingsChange = {},

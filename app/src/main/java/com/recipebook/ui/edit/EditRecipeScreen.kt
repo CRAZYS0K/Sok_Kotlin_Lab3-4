@@ -67,7 +67,7 @@ import com.recipebook.ui.RecipePhoto
 import com.recipebook.ui.amountMessageRes
 import com.recipebook.ui.labelRes
 import com.recipebook.ui.messageRes
-import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
+import com.recipebook.ui.theme.RecipeBookTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -401,7 +401,7 @@ private fun EditRecipeScreenPreview() {
             addStep("Размять творог вилкой, добавить яйцо, сахар и соль.")
         }
     }
-    Sok_Kotlin_Lab34Theme {
+    RecipeBookTheme {
         EditRecipeScreen(
             form = form,
             isNew = true,

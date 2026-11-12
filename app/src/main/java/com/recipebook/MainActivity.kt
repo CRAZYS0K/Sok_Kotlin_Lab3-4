@@ -16,7 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.recipebook.ui.list.RecipeListScreen
 import com.recipebook.ui.list.RecipeListViewModel
-import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
+import com.recipebook.ui.theme.RecipeBookTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Sok_Kotlin_Lab34Theme {
+            RecipeBookTheme {
                 val viewModel: RecipeListViewModel = viewModel(factory = RecipeListViewModel.Factory)
                 val state by viewModel.uiState.collectAsStateWithLifecycle()
                 val snackbarHostState = remember { SnackbarHostState() }

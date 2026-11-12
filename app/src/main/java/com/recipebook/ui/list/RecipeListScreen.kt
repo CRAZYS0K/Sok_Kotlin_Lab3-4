@@ -64,7 +64,7 @@ import com.recipebook.ui.FavoriteButton
 import com.recipebook.ui.IconText
 import com.recipebook.ui.RecipePhoto
 import com.recipebook.ui.labelRes
-import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
+import com.recipebook.ui.theme.RecipeBookTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -289,7 +289,7 @@ private fun RecipeListScreenPreview() {
         Recipe(id = 1, name = "Сырники", category = Category.BREAKFAST, cookingMinutes = 25, servings = 3, isFavorite = true),
         Recipe(id = 2, name = "Борщ", category = Category.SOUP, cookingMinutes = 90, servings = 6),
     )
-    Sok_Kotlin_Lab34Theme {
+    RecipeBookTheme {
         RecipeListScreen(
             state = RecipeListUiState(recipes = recipes, isLoading = false),
             query = rememberTextFieldState(),
