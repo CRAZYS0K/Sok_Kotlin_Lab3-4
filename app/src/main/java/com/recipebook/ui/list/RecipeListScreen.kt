@@ -147,6 +147,7 @@ fun RecipeListScreen(
                             recipe = recipe,
                             onClick = { leaveTo { onRecipeClick(recipe.id) } },
                             onFavoriteToggle = { onFavoriteToggle(recipe) },
+                            modifier = Modifier.animateItem(),
                         )
                     }
                 }
@@ -241,11 +242,16 @@ private fun Chip(text: String, selected: Boolean, onClick: () -> Unit) {
 }
 
 @Composable
-private fun RecipeCard(recipe: Recipe, onClick: () -> Unit, onFavoriteToggle: () -> Unit) {
+private fun RecipeCard(
+    recipe: Recipe,
+    onClick: () -> Unit,
+    onFavoriteToggle: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val style = LocalCardStyle.current
     Card(
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.large,
         colors = CardDefaults.cardColors(containerColor = style.container),
         border = BorderStroke(1.dp, style.border),
