@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
@@ -52,6 +51,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -59,6 +65,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.recipebook.R
 import com.recipebook.data.Category
@@ -174,6 +181,20 @@ fun EditRecipeScreen(
     }
 }
 
+private fun Modifier.dashedOutline(color: Color, radius: Dp, visible: Boolean) = drawWithContent {
+    drawContent()
+    if (visible) {
+        val width = 1.5.dp.toPx()
+        drawRoundRect(
+            color = color,
+            topLeft = Offset(width / 2, width / 2),
+            size = Size(size.width - width, size.height - width),
+            cornerRadius = CornerRadius(radius.toPx()),
+            style = Stroke(width, pathEffect = PathEffect.dashPathEffect(floatArrayOf(6.dp.toPx(), 4.dp.toPx()))),
+        )
+    }
+}
+
 @Composable
 private fun PhotoField(
     photo: String?,
@@ -187,8 +208,9 @@ private fun PhotoField(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(180.dp)
-                .clip(RoundedCornerShape(16.dp))
-                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .clip(MaterialTheme.shapes.large)
+                .background(MaterialTheme.colorScheme.surfaceContainer)
+                .dashedOutline(MaterialTheme.colorScheme.outline, 16.dp, visible = photo == null && !isLoading)
                 .clickable(onClick = onPick),
             contentAlignment = Alignment.Center,
         ) {
