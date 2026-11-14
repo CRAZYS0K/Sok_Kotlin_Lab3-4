@@ -13,14 +13,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.recipebook.ui.recipe.RecipeScreen
 import com.recipebook.ui.recipe.RecipeViewModel
-import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
+import com.recipebook.ui.theme.RecipeBookTheme
 
 class RecipeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Sok_Kotlin_Lab34Theme {
+            RecipeBookTheme {
                 val viewModel: RecipeViewModel = viewModel(factory = RecipeViewModel.Factory)
                 val state by viewModel.uiState.collectAsStateWithLifecycle()
 

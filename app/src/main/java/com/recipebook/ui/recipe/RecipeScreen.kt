@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
@@ -57,7 +56,7 @@ import com.recipebook.ui.IconText
 import com.recipebook.ui.RecipePhoto
 import com.recipebook.ui.currentLocale
 import com.recipebook.ui.labelRes
-import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
+import com.recipebook.ui.theme.RecipeBookTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -154,14 +153,14 @@ private fun LazyListScope.recipeHeader(recipe: Recipe) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .clip(RoundedCornerShape(16.dp)),
+                .clip(MaterialTheme.shapes.large),
         )
         Spacer(Modifier.height(16.dp))
         Text(recipe.name, style = MaterialTheme.typography.headlineMedium)
         Spacer(Modifier.height(8.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             Surface(
-                shape = RoundedCornerShape(8.dp),
+                shape = MaterialTheme.shapes.small,
                 color = MaterialTheme.colorScheme.secondaryContainer,
             ) {
                 Text(
@@ -180,8 +179,8 @@ private fun LazyListScope.recipeHeader(recipe: Recipe) {
 @Composable
 private fun ServingsPanel(servings: Int, onDecrease: () -> Unit, onIncrease: () -> Unit) {
     Surface(
-        shape = RoundedCornerShape(16.dp),
-        color = MaterialTheme.colorScheme.surfaceVariant,
+        shape = MaterialTheme.shapes.large,
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
         modifier = Modifier.fillMaxWidth(),
     ) {
         Row(
@@ -190,7 +189,8 @@ private fun ServingsPanel(servings: Int, onDecrease: () -> Unit, onIncrease: () 
         ) {
             Text(
                 text = stringResource(R.string.servings_label),
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Medium,
                 modifier = Modifier.weight(1f),
             )
             OutlinedIconButton(onClick = onDecrease, enabled = servings > Servings.MIN) {
@@ -307,7 +307,7 @@ private fun RecipeScreenPreview() {
         ),
         steps = listOf(Step(id = 1, recipeId = 1, position = 0, text = "Размять творог вилкой.")),
     )
-    Sok_Kotlin_Lab34Theme {
+    RecipeBookTheme {
         RecipeScreen(
             state = RecipeUiState(details = details, servings = 3, isLoading = false),
             onServingsChange = {},

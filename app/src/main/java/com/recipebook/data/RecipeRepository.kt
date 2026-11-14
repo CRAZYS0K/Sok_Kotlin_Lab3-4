@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 class RecipeRepository(private val dao: RecipeDao, private val photos: PhotoStorage) {
-    fun observeRecipes(): Flow<List<Recipe>> = dao.observeRecipes()
+    fun observeRecipes(): Flow<List<RecipeWithIngredients>> = dao.observeRecipes()
 
     fun observe(id: Long): Flow<RecipeWithDetails?> = dao.observe(id).map { it?.inOrder() }
 

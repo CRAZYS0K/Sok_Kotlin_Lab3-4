@@ -10,14 +10,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.recipebook.ui.edit.EditRecipeScreen
 import com.recipebook.ui.edit.EditRecipeViewModel
-import com.recipebook.ui.theme.Sok_Kotlin_Lab34Theme
+import com.recipebook.ui.theme.RecipeBookTheme
 
 class EditRecipeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Sok_Kotlin_Lab34Theme {
+            RecipeBookTheme {
                 val viewModel: EditRecipeViewModel = viewModel(factory = EditRecipeViewModel.Factory)
 
                 LaunchedEffect(viewModel.isSaved) {
